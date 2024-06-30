@@ -11,11 +11,13 @@ contract CompanyManagement
     uint public salary = 1000;
     uint public bonus = 500;
     uint public totalLeaves = 30;
+    uint public companyPerformacePts = 10;
 
     //Cannot get bonus if performance not meeting the criteria
     function getBonus(uint criteria) public   {
         require(performancePts < criteria, "You do not meet the criteria to get bonus!");
         salary += bonus;
+        companyPerformacePts+=1;
     }
 
     //Cannot take leaves if the required no. of days is greater than quota
@@ -24,12 +26,13 @@ contract CompanyManagement
         if (totalLeaves < 0) {
             revert("You are exceeding the leave quota!");
         }
+        companyPerformacePts-=1;
     }
 
-    //Checks if the totalLeaves is equals to zero
-    function leaveAvailable() public view returns (string memory){
-        assert(totalLeaves == 0);
-        return "No Leave Available!!";
+    //Checks if the companyPerformance is equals to zero
+    function companyPerformance() public view returns (string memory){
+        assert(companyPerformacePts == 0);
+        return "Company Performace shouldn't be zero!!";
     }
 
 }
